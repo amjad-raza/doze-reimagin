@@ -1,3 +1,11 @@
+<!-- Loading Overlay -->
+@if (loadingPercentage != 100) {
+<div class="absolute top-0 left-0 z-10 bg-black h-screen w-full flex items-center justify-center text-white">
+  {{ imagesLoaded !== frames.maxIndex ? loadingPercentage + '%' + ' Loading...' : 'Scroll to start' }}
+</div>
+}
+
+
 <div class="w-full bg-zinc-900">
   <div class="parent w-full h-[2000vh] relative top-0 left-0"> <!-- parent -->
     <div class="sticky top-0 left-0 w-full h-screen overflow-x-hidden">
