@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
@@ -18,7 +19,7 @@ interface Frame {
 })
 export class AppComponent implements AfterViewInit {
   title = 'doze-reimagin';
-
+  lenis: any;
   @ViewChild('frame') canvas!: ElementRef<HTMLCanvasElement>;
   private context!: CanvasRenderingContext2D | null;
 
@@ -31,6 +32,21 @@ export class AppComponent implements AfterViewInit {
   private images: HTMLImageElement[] = [];
   imagesLoaded = 0;
   private resizeTimeout!: any;
+
+  ngOnInit(): void {
+    this.lenis = new Lenis({
+      duration: 1.2,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      // smooth: true, // Remove this line if it causes errors
+    });
+
+    const raf = (time: number) => {
+      this.lenis.raf(time);
+      requestAnimationFrame(raf);
+    };
+
+    requestAnimationFrame(raf);
+  }
 
   ngAfterViewInit() {
     this.context = this.canvas.nativeElement.getContext('2d');
