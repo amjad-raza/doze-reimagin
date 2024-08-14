@@ -24,6 +24,7 @@ export class AppComponent implements AfterViewInit {
 
   frames: Frame = {
     currentIndex: 0,
+    // maxIndex: 538,
     maxIndex: 1345,
   };
 
@@ -36,6 +37,17 @@ export class AppComponent implements AfterViewInit {
     this.disableScroll(); // Disable scrolling initially
     this.preloadImages();
     this.handleResize();
+    document.querySelectorAll(".headings h3").forEach((heading) => {
+      gsap.from(heading, {
+        scrollTrigger: {
+          trigger: heading,
+          start: "top 80%",
+          end: "bottom 20%",
+          scrub: 2
+        },
+        opacity: .3
+      })
+    })
   }
 
   disableScroll() {
@@ -92,17 +104,60 @@ export class AppComponent implements AfterViewInit {
         // markers: true,
       },
     })
-    
-    tl.to(this.frames, {
-      currentIndex: this.frames.maxIndex,
+
+    tl
+      .to(this.frames, this.updateFrames(80), 'anime1-strta')
+      .to('.anime1', { opacity: 0, ease: 'linear' }, 'anime1-strta')
+
+      .to(this.frames, this.updateFrames(160), 'anime2-strta')
+      .to('.anime2', { opacity: 1, ease: 'linear' }, 'anime2-strta')
+      .to(this.frames, this.updateFrames(240), 'anime2-stay')
+      .to('.anime2', { opacity: 1, ease: 'linear' }, 'anime2-stay')
+      .to(this.frames, this.updateFrames(400), 'anime2-end')
+      .to('.anime2', { opacity: 0, ease: 'linear' }, 'anime2-end')
+
+      .to(this.frames, this.updateFrames(480), 'anime3-strta')
+      .to('.anime3', { opacity: 1, ease: 'linear' }, 'anime3-strta')
+      .to(this.frames, this.updateFrames(560), 'anime3-stay')
+      .to('.anime3', { opacity: 1, ease: 'linear' }, 'anime3-stay')
+      .to(this.frames, this.updateFrames(640), 'anime3-end')
+      .to('.anime3', { opacity: 0, ease: 'linear' }, 'anime3-end')
+
+      .to(this.frames, this.updateFrames(720), 'panel-strat')
+      .to('.panel', { translateX: 0, ease: 'expo' }, 'panel-start')
+      .to(this.frames, this.updateFrames(800), 'panel-stay')
+      .to('.panel', { translateX: 0, ease: 'expo' }, 'panel-stay')
+      .to(this.frames, this.updateFrames(880), 'panel-end')
+      .to('.panel', { opacity: 0, ease: 'linear' }, 'panel-end')
+
+      .to(this.frames, this.updateFrames(960), 'canvas-strat')
+      .to('canvas', { scale: 0.5, ease: 'linear' }, 'canvas-start')
+
+      .to(this.frames, this.updateFrames(1040), 'panelism-strat')
+      .to('.panelism', { opacity: 1, ease: 'expo' }, 'panelism-start')
+      .to(this.frames, this.updateFrames(1120), 'panelism-strat')
+      .to('.panelism span', { width: 200, ease: 'expo' }, 'panelism-start')
+
+      .to(this.frames, this.updateFrames(1200), 'canvas-end')
+      .to('canvas', { scale: 1, ease: 'linear' }, 'canvas-end')
+
+      .to(this.frames, this.updateFrames(1280), 'panelism-scale')
+      .to('.panelism', { scale: 2, ease: 'circ' }, 'panelism-scale')
+      .to(this.frames, this.updateFrames(1345), 'panelism-stay')
+      .to('.panelism', { scale: 2, ease: 'circ' }, 'panelism-stay')
+  }
+
+  updateFrames(index: number) {
+    return {
+      currentIndex: index,
       duration: 1,
-      ease: 'none',
+      ease: 'linear',
       onUpdate: () => {
         requestAnimationFrame(() => {
           this.loadImage(Math.floor(this.frames.currentIndex));
         });
       },
-    });
+    }
   }
 
   @HostListener('window:resize')
