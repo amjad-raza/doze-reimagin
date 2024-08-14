@@ -24,7 +24,7 @@ export class AppComponent implements AfterViewInit {
 
   frames: Frame = {
     currentIndex: 0,
-    maxIndex: 537,
+    maxIndex: 1345,
   };
 
   private images: HTMLImageElement[] = [];
@@ -84,14 +84,16 @@ export class AppComponent implements AfterViewInit {
   }
 
   startAnimation() {
-    gsap.timeline({
+    var tl = gsap.timeline({
       scrollTrigger: {
         trigger: '.parent',
         start: 'top top',
         scrub: 2,
         // markers: true,
       },
-    }).to(this.frames, {
+    })
+    
+    tl.to(this.frames, {
       currentIndex: this.frames.maxIndex,
       duration: 1,
       ease: 'none',
