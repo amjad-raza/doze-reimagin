@@ -34,19 +34,22 @@ export class AppComponent implements AfterViewInit {
   private resizeTimeout!: any;
 
   ngOnInit(): void {
-    this.lenis = new Lenis({
-      duration: 1.2,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      // smooth: true, // Remove this line if it causes errors
-    });
+    // this.lenis = new Lenis({
+    //   duration: 1.2,
+    //   easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    //   smoothWheel: true,  // Enable smooth scrolling
+    //   // Ensure no preventDefault() calls are made on passive listeners
+    // });
+  
+    // const raf = (time: number) => {
+    //   this.lenis.raf(time);
+    //   requestAnimationFrame(raf);
+    // };
+  
+    // requestAnimationFrame(raf);
 
-    const raf = (time: number) => {
-      this.lenis.raf(time);
-      requestAnimationFrame(raf);
-    };
-
-    requestAnimationFrame(raf);
   }
+  
 
   ngAfterViewInit() {
     this.context = this.canvas.nativeElement.getContext('2d');
