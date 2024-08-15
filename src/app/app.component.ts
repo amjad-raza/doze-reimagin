@@ -147,7 +147,7 @@ export class AppComponent implements AfterViewInit {
       .to(this.frames, this.updateFrames(800), 'panel-stay')
       .to('.panel', { translateX: 0, ease: 'expo' }, 'panel-stay')
       .to(this.frames, this.updateFrames(880), 'panel-end')
-      .to('.panel', { opacity: 0, ease: 'linear' }, 'panel-end')
+      .to('.panel', { translateX: '100%', ease: 'expo' }, 'panel-end')
 
       .to(this.frames, this.updateFrames(960), 'canvas-strat')
       .to('canvas', { scale: 0.5, ease: 'linear' }, 'canvas-start')
